@@ -24,16 +24,17 @@
     <th>Start Date</th>
     <th>End Date</th>
     <th>Status</th>
-    <th>Approve</th>
-    <th>Deny</th>
   </tr>
     <% @cat.rental_requests.order(:start_date).each do |rental| %>
       <tr>
         <td><%= rental.start_date %></td>
         <td><%= rental.end_date %></td>
-        <td><%= rental.status %></td>
-        <td> <%= button_to "Approve", approve_url(rental), method: :patch if rental.pending?%> </td>
-        <td> <%= button_to "Deny", deny_url(rental), method: :patch if rental.pending?%> </td>
+        <% if rental.pending? %>
+          <td> <%= button_to "Approve", approve_url(rental), method: :patch %>
+            <%= button_to "Deny", deny_url(rental), method: :patch %> </td>
+        <% else %>
+          <td><%= rental.status %></td>
+        <% end %>
       </tr>
     <% end  %>
 </table>

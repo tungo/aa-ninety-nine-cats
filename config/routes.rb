@@ -54,7 +54,7 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  resources :cats, only: [:index, :show, :new, :create, :edit, :update]
+  resources :cats, except: :destroy
 
   resources :cat_rental_requests, only: [:new, :create]
 
