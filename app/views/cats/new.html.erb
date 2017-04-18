@@ -1,0 +1,34 @@
+<h1>New cat</h1>
+
+<form action="<%= cats_url %>" method = "POST">
+  <label for="cat_name">Cat Name</label>
+  <input type="text" id="cat_name" name="cat[name]" />
+
+  <br />
+
+  <label for="cat_sex_M">Male</label>
+  <input type="radio" id="cat_sex_M" value="M" name = "cat[sex]" />
+  <label for="cat_sex_F">Female</label>
+  <input type="radio" id="cat_sex_F" value="F" name = "cat[sex]" />
+
+  <br />
+
+  <select id="cat_color" name="cat[color]">
+    <option disabled selected>
+      --PLEASE SELECT--
+    </option>
+    <%Cat::COLORS.each do |color| %>
+      <option value = "<%= color %>"> <%= color.capitalize %> </option>
+    <% end %>
+  </select>
+
+  <br />
+
+  <label for="cat_birthday">Birthday</label>
+  <input type="date" id="cat_birthday" name="cat[birthday]" />
+
+  <br />
+
+  <label for="cat_description">Description</label>
+  <textarea id = "cat_description" name="cat[description]"></textarea>
+</form>
