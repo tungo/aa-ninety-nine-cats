@@ -1,8 +1,8 @@
 <h1>Add new rental</h1>
 
 <form action= "<%= cat_rental_requests_url %>" method="POST">
-  <label for="rental_cat">Choose cat</label>
-  <select id="rental_cat" name="rental[cat]">
+  <label for="rental_cat_id">Choose cat</label>
+  <select id="rental_cat_id" name="rental[cat_id]">
     <% Cat.all.each do |kitty| %>
       <option value=" <%= kitty.id %>"> <%= kitty.name %></option>
     <% end %>
