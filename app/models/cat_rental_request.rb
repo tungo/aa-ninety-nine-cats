@@ -18,7 +18,8 @@ class CatRentalRequest < ActiveRecord::Base
 
   def overlapping_requests
     CatRentalRequest.where(cat_id: cat_id)
-      .where("end_date > ?", start_date)
+      .where("start_date BETWEEN ? AND ? OR
+        end_date BETWEEN ? AND ?", start_date, end_date, start_date, end_date)
       .where.not(id: id)
   end
 
@@ -37,5 +38,24 @@ class CatRentalRequest < ActiveRecord::Base
     unless cat
       errors[:cat_id] << "Must exist"
     end
+  end
+
+  def overlapping_pending_requests
+    overlapping_requests.where(status: 'PENDING')
+  end
+
+  def approve!
+    ActiveRecord::Base.transaction do
+      update(status: "APPROVED")
+      overlapping_pending_requests.update_all(status: "DENIED")
+    end
+  end
+
+  def deny!
+    update(status: 'DENIED')
+  end
+
+  def pending?
+    status == 'PENDING'
   end
 end
