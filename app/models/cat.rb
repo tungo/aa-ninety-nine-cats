@@ -17,6 +17,12 @@ class Cat < ActiveRecord::Base
   validates :color, inclusion: COLORS
   validates :sex, inclusion: SEXES
 
+  has_many :rental_requests,
+    dependent: :destroy,
+    primary_key: :id,
+    foreign_key: :cat_id,
+    class_name: :CatRentalRequest
+
   def age
     Date.today.year - birth_date.year
   end
