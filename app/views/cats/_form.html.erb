@@ -1,8 +1,8 @@
-<% if action == :new %>
-  <form action="<%= cats_url %>" method = "POST">
-<% else %>
+<% if cat.persisted? %>
   <form action="<%= cat_url(cat) %>" method = "POST">
     <input type ="hidden" name = "_method", value = "PATCH" />
+<% else %>
+  <form action="<%= cats_url %>" method = "POST">
 <% end %>
 
 
@@ -20,7 +20,7 @@
 
   <label for="cat_color">Color </label>
   <select id="cat_color" name="cat[color]">
-    <% if action == :new %>
+    <% unless cat.persisted? %>
       <option disabled selected>
         -- Please select color --
       </option>
@@ -43,5 +43,5 @@
   <br />
   <br />
 
-  <input type="submit" value= "<%= action == :new ? "Add cat" : "Update cat" %>" />
+  <input type="submit" value= "<%= cat.persisted? ? "Update cat" : "Add cat" %>" />
 </form>
